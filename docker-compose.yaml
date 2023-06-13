@@ -1,0 +1,27 @@
+version: "3.0"
+
+services:
+
+  tesseract:
+    build:
+      context: .
+      dockerfile: Dockerfile1
+    network_mode: "bridge"
+    image: "tesseract:1.1"
+    container_name: tesseract
+    restart: always
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./:/root/server
+    environment:
+      - "LC_ALL=C.UTF-8"
+      - "LANG=C.UTF-8"
+      - "TZ=Asia/Shanghai"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/tesseract/bin"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd /root/server && touch /root/server/nohup.out && nohup python3 server.py &
+        tail -f /root/server/nohup.out

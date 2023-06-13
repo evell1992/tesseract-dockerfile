@@ -1,0 +1,5 @@
+FROM tesseract:1.0
+WORKDIR /root
+
+RUN export PATH=$PATH:/root/tesseract/bin && rm -rf /root/.pip \
+    && pip install tesserocr && pip install pillow && pip install flask
